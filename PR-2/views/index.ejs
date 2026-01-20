@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>To Do List</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial;
+  background:#dbe2f1;
+}
+.wrapper{
+  display:flex;
+  width:1100px;     
+  min-height:550px;         
+  margin:40px auto;
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+}
+.sidebar{
+  width:220px;
+  background:#4f67d1;
+  padding:30px 20px;
+  color:white;
+}
+.sidebar h2{
+  margin-bottom:30px;
+}
+.sidebar a{
+  display:block;
+  color:white;
+  text-decoration:none;
+  margin-bottom:15px;
+}
+.main{
+  flex:1;
+  padding:30px;
+}
+h2{
+  text-align:center;
+  margin-bottom:30px;
+}
+.task-list{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:30px;
+}
+.card{
+  background:#f5f5f5;
+  padding:20px;
+  border-radius:15px;
+}
+.badge{
+  padding:4px 8px;
+  color:white;
+  border-radius:5px;
+  font-size:12px;
+  margin-left:6px;
+}
+.low{background:green;}
+.medium{background:orange;}
+.high{background:red;}
+
+#edit,#delete{
+  margin-right:10px;
+  padding:4px 6px;
+  background:#b8c3f4;
+  border-radius:5px;
+  text-decoration:none;
+  color:black;
+  font-size:13px;
+}
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+
+  <div class="sidebar">
+    <h2>Task Manager</h2>
+    <a href="/">Dashboard</a>
+    <a href="/add">Add To List</a>
+  </div>
+
+  <div class="main">
+    <h2>To-Do List</h2>
+
+    <div class="task-list">
+      <% tasks.forEach((task, index) => { %>
+        <div class="card">
+          <h4>
+            <%= index + 1 %>.
+            <span class="badge <%= task.priority.toLowerCase() %>">
+              <%= task.priority %>
+            </span>
+          </h4>
+
+          <h4><%= task.title %></h4>
+          <p><%= task.description %></p>
+          <p>Due: <%= task.date %></p>
+
+          <a href="/edit/<%= task.id %>" id="edit">Edit</a>
+          <a href="/delete/<%= task.id %>" id="delete">Delete</a>
+        </div>
+      <% }) %>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
