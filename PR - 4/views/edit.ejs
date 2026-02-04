@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-4">
+
+                    <h3 class="text-center fw-bold mb-4"> Edit Book</h3>
+
+                    <% if(book.image && book.image !== "") { %>
+                        <img src="/<%= book.image %>" class="img-fluid rounded mb-3" style="height:220px;object-fit:cover;">
+                    <% } %>
+
+                    <form action="/update/<%= book._id %>" method="POST" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+                            <label class="form-label">Book Title</label>
+                            <input type="text" name="title" class="form-control" value="<%= book.title %>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Author</label>
+                            <input type="text" name="author" class="form-control" value="<%= book.author %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input type="text" name="description" class="form-control" value="<%= book.description %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Category</label>
+                            <input type="text" name="category" class="form-control" value="<%= book.category %>">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Price (₹)</label>
+                            <input type="number" name="price" class="form-control" value="<%= book.price %>">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Change Image</label>
+                            <input type="file" name="image" class="form-control">
+                        </div>
+
+                        <button class="btn btn-dark w-100">Update Book</button>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
