@@ -31,8 +31,8 @@
                 <div class="card shadow-sm border-0 rounded-4 h-100">
 
                     <% if(book.image && book.image !== "") { %>
-                        <img src="/<%= book.image %>" class="card-img-top rounded-top-4"
-                             style="height:200px; object-fit:cover;">
+                        <img src="/<%= book.image %>" class="card-img-top rounded-top-4 p-2"
+                             style="height:200px; object-fit:contain;">
                     <% } %>
 
                     <div class="card-body">
