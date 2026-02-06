@@ -2,7 +2,7 @@ const express = require('express');
 const{uploadImage} = require('../middleware/uploadImage');
 const router = express.Router();
 
-const book = require('../controllers/book.controller.js');
+const book = require('./controllers/book.controller.js');
 const upload = require('../middleware/uploadImage');
 
 router.get('/', book.getBooks);
