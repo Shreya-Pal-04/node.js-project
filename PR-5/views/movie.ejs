@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book My Show</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body class="bg-light">
+    <header class="bms-header">
+        <div class="left">
+            <p>book<img src="https://in.bmscdn.com/webin/common/icons/logo.svg" class="logo">show</p>
+        </div>
+        <form method="GET" action="/" class="search-box">
+            <i class="icon">🔍</i>
+            <input
+                type="text"
+                name="search"
+                placeholder="Search for Movies, Events, Plays, Sports and Activities"
+                value="<%= search || '' %>"
+            >
+        </form>
+        <div class="right">
+            <button class="signin">Sign In</button>
+            <div class="menu">☰</div>
+        </div>
+    </header>
+    <nav class="bms-subnav">
+        <ul>
+            <li><a href="">Movies</a></li>
+            <li><a href="/add">Add Movies</a></li>
+        </ul>
+    </nav>
+    <div id="mainSlider" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
+
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://assets-in-gm.bmscdn.com/promotions/cms/creatives/1764758779502_4thdecdes1.jpg" class="d-block w-100 slider-img" alt="slide1">
+    </div>
+    <div class="carousel-item">
+      <img src="https://assets-in-gm.bmscdn.com/promotions/cms/creatives/1764053633401_luckywebdecguj.jpg" class="d-block w-100 slider-img" alt="slide2">
+    </div>
+    <div class="carousel-item">
+      <img src="https://assets-in-gm.bmscdn.com/promotions/cms/creatives/1763467944657_popdes.jpg" class="d-block w-100 slider-img" alt="slide3">
+    </div>
+    <div class="carousel-item">
+      <img src="https://assets-in-gm.bmscdn.com/promotions/cms/creatives/1763383297298_tpl1240x300.jpg" class="d-block w-100 slider-img" alt="slide3">
+    </div>
+  </div>
+
+</div>
+<div class="container mt-4">
+    <h3 class="fw-bold mb-4">Recommended Movies</h3>
+
+    <div class="row">
+        <% movies.forEach(movie => { %>
+
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm border-0 rounded-4 h-100">
+
+                    <% if(movie.image && movie.image !== "") { %>
+                        <img src="<%= movie.image %>"
+                             class="card-img-top rounded-top-4 p-2"
+                             style="height:200px; object-fit:contain;">
+                    <% } else { %>
+                        <img src="/default.jpg"
+                             class="card-img-top rounded-top-4 p-2"
+                             style="height:200px; object-fit:contain;">
+                    <% } %>
+
+                    <!-- M Details -->
+                    <div class="card-body small">
+
+                        <h6 class="fw-bold mb-2"><%= movie.title %></h6>
+
+                        <p class="mb-1">
+                            ⭐ <strong><%= movie.rating %>/5</strong>
+                            (<%= movie.votes %> votes)
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Duration:</strong> <%= movie.duration %>
+                        </p>
+                        <p class="mb-1">
+                            <strong>Certificate:</strong>
+                            <span class="badge bg-secondary">
+                                <%= movie.certification %>
+                            </span>
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Release:</strong>
+                            <%= movie.releaseDate ? movie.releaseDate.toDateString() : "N/A" %>
+                        </p>
+
+                        <p class="text-muted mt-2"
+                           style="height:55px; overflow:hidden;">
+                            <%= movie.plot %>
+                        </p>
+
+                    </div>
+                    <div class="card-footer bg-white border-0 d-flex justify-content-between">
+                        <a href="/edit/<%= movie._id %>" class="btn btn-outline-primary btn-sm">Edit</a>
+                        <a href="/delete/<%= movie._id %>"
+                           class="btn btn-outline-danger btn-sm">Delete</a>
+                    </div>
+
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
