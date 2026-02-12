@@ -127,7 +127,6 @@ color: #333;
     color: #333;
 }
 
-/* ---------- Form Fields ---------- */
 .form-row {
     display: flex;
     flex-direction: column;
@@ -153,16 +152,12 @@ textarea {
     resize: none;
     height: 90px;
 }
-
-/* ---------- Checkbox ---------- */
 .checkbox-group {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
     font-size: 14px;
 }
-
-/* ---------- Button ---------- */
 .submit-btn {
     width: 100%;
     background: #f84464;
