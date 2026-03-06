@@ -32,6 +32,7 @@ routes.post("/changePassword",changePassword);
 
 routes.use("/admin", require("./admin.routes"));
 routes.use("/blog", require("./blog.routes"));
+routes.use("/category", require("./category.routes"));
 
 // forgot pass
 routes.get("/changePassword", changePasswordPage);
@@ -39,9 +40,9 @@ routes.get("/changePassword", changePasswordPage);
 routes.get('/forgotpassword', forgotPasswordPage);
 routes.post('/sendotp', sendOtp);
 routes.get('/verifyotp', verifyOtpPage);
-
+routes.post('/verifyotp', verifyOtp);
 // zlcq pldx tkra vmbb
 
 
-routes.post('/verifyotp', verifyOtp);
+
 module.exports = routes;

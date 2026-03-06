@@ -1,5 +1,6 @@
 const Admin = require("../model/admin.model");
 const bcrypt = require("bcrypt");
+const fs = require("fs");
 
 exports.viewAllAdmins = async (req, res) => {
     try {
@@ -87,17 +88,21 @@ exports.updateAdmin = async (req, res) => {
 
 exports.deleteAdmin = async (req, res) => {
     try {
+
         let admin = await Admin.findById(req.params.id);
+
         if (admin.profileImage) {
-            if (fs.existsSync(admin.profileImage)) {
-                fs.unlinkSync(admin.profileImage);
+
+            if (fs.existsSync("public/" + admin.profileImage)) {
+                fs.unlinkSync("public/" + admin.profileImage);
             }
+
         }
         await Admin.findByIdAndDelete(req.params.id);
-
         return res.redirect("/admin/viewadmin");
+
     } catch (error) {
         console.log(error);
-        res.redirect("/admin/viewadmin");
+        return res.redirect("/admin/viewadmin");
     }
 };

@@ -83,14 +83,33 @@ exports.dashboard = async (req, res) => {
 }
 exports.login = async (req, res) => {
     try {
+
+        const { email, password } = req.body;
+
+        const user = await Admin.findOne({ email });
+
+        if(!user){
+            console.log("User not found");
+            return res.redirect("/");
+        }
+
+        const match = await bcrypt.compare(password, user.password);
+
+        if(!match){
+            console.log("Password incorrect");
+            return res.redirect("/");
+        }
+
+        // cookie set
+        res.cookie("user", { _id: user._id });
+
         return res.redirect("/dashboard");
+
     } catch (error) {
-        console.log(error)
+        console.log(error);
         return res.redirect("/");
     }
 }
-
-
   // forgot pass
 exports.forgotPasswordPage = async (req, res) => {
     try {

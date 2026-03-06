@@ -1,0 +1,50 @@
+<%- include('../header') %>
+
+<div class="page-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+
+          <form action="/category/update_category/<%= category._id %>" 
+                method="POST" 
+                enctype="multipart/form-data">
+
+            <div class="card-body">
+              <h4 class="card-title">Edit category</h4>
+
+              <div class="form-group">
+                <label> Category Name</label>
+                <input type="text" 
+                       name="category" 
+                       value="<%= category.category %>" 
+                       class="form-control" 
+                       required>
+              </div>
+
+</select>
+
+              <div class="form-group">
+                <label>Change Cover Image</label>
+                <input type="file" 
+                       name="categoryImage" 
+                       class="form-control-file">
+              </div>
+
+            </div>
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">
+                Update Category
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../footer') %>
