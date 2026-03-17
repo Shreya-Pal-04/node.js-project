@@ -1,4 +1,7 @@
 const Category = require('../model/category.model');
+const Subcategory = require('../model/subcategory.model');
+const ExtraCategory = require('../model/extracategory.model');
+const Product = require('../model/product.model');
 const fs = require("fs");
 
 exports.addCategoryPage = async (req, res) => {
@@ -85,15 +88,18 @@ exports.deleteCategory = async (req,res)=>{
 
         let category = await Category.findById(req.params.id);
 
-        if(category.categoryImage && fs.existsSync("public" + category.categoryImage)){
-            fs.unlinkSync("public" + category.categoryImage);
+        if(!category){
+            return res.redirect("/category/view_category");
         }
-
         await Category.findByIdAndDelete(req.params.id);
+        await Subcategory.deleteMany({ categoryId: req.params.id });
+        await ExtraCategory.deleteMany({ categoryId: req.params.id });
+        await Product.deleteMany({ categoryId: req.params.id });
 
         return res.redirect("/category/view_category");
 
     }catch(error){
         console.log(error);
+        return res.redirect("/dashboard");
     }
 }

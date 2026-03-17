@@ -33,6 +33,9 @@ routes.post("/changePassword",changePassword);
 routes.use("/admin", require("./admin.routes"));
 routes.use("/blog", require("./blog.routes"));
 routes.use("/category", require("./category.routes"));
+routes.use("/subcategory", require("./subcategory.routes"));
+routes.use("/extracategory", require("./extracategory.routes"));
+routes.use("/product", require("./product.routes"));
 
 // forgot pass
 routes.get("/changePassword", changePasswordPage);

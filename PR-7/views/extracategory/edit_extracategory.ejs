@@ -1,0 +1,75 @@
+<%- include('../header') %>
+
+<div class="page-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+
+          <form action="/extracategory/update_extracategory/<%= extracategory._id %>" 
+                method="POST">
+            <div class="card-body">
+              <h4 class="card-title">Edit Extra Category</h4>
+              <div class="form-group">
+                <label>Select Category</label>
+
+                <select name="categoryId" id="category" class="form-control" required>
+
+                  <% categories.forEach(cat => { %>
+
+                    <option value="<%= cat._id %>"
+  <%= extracategory.categoryId.toString() === cat._id.toString() ? "selected" : "" %>>
+  <%= cat.category %>
+</option>
+                  <% }) %>
+                </select>
+              </div>
+              <!-- Subcategory -->
+              <div class="form-group">
+                <label>Select Subcategory</label>
+                <select name="subcategoryId" id="subcategory" class="form-control" required>
+                  <% subcategories.forEach(sub => { %>
+                    <option value="<%= sub._id %>"
+  <%= extracategory.subcategoryId.toString() === sub._id.toString() ? "selected" : "" %>>
+  <%= sub.subcategory %>
+</option>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Extra Category Name</label>
+                <input type="text"
+                       name="extraCategory"
+                       value="<%= extracategory.extraCategory %>"
+                       class="form-control"
+                       required>
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">
+                Update Extra Category
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../footer') %>
+
+<script>
+document.getElementById("category").addEventListener("change", async function () {
+
+    let categoryId = this.value;
+    let res = await fetch(`/extracategory/subcategory?categoryId=${categoryId}`);
+    let data = await res.json();
+    let subDropdown = document.getElementById("subcategory");
+    subDropdown.innerHTML = "";
+    data.forEach(sub => {
+        subDropdown.innerHTML += `<option value="${sub._id}">${sub.subcategory}</option>`;
+    });
+
+});
+</script>

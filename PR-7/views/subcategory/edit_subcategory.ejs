@@ -1,0 +1,63 @@
+<%- include('../header') %>
+
+<div class="page-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-md-8">
+        <div class="card">
+
+          <form action="/subcategory/update_subcategory/<%= subcategory._id %>" method="POST">
+
+            <div class="card-body">
+              <h4 class="card-title">Edit Subcategory</h4>
+
+              <!-- Category Dropdown -->
+              <div class="form-group">
+                <label>Category Name</label>
+
+                <select name="categoryId" class="form-control" required>
+
+                  <% categories.forEach(cat => { %>
+
+                    <option value="<%= cat._id %>" 
+                      <%= subcategory.categoryId.toString() === cat._id.toString() ? "selected" : "" %>>
+
+                      <%= cat.category %>
+
+                    </option>
+
+                  <% }) %>
+
+                </select>
+              </div>
+
+              <!-- Subcategory Name -->
+              <div class="form-group">
+                <label>Subcategory Name</label>
+
+                <input type="text"
+                       name="subcategory"
+                       value="<%= subcategory.subcategory %>"
+                       class="form-control"
+                       required>
+              </div>
+
+            </div>
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">
+                Update Subcategory
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../footer') %>

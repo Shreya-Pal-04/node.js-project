@@ -1,0 +1,161 @@
+<%- include('../header') %>
+
+<div class="page-wrapper">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+
+          <form action="/product/update_product/<%= product._id %>" 
+                method="POST">
+
+            <div class="card-body">
+              <h4 class="card-title">Edit Product</h4>
+              <div class="form-group">
+                <label>Product Name</label>
+
+                <input type="text"
+                       name="productName"
+                       value="<%= product.productName %>"
+                       class="form-control"
+                       required>
+              </div>
+              <div class="form-group">
+                <label>Price</label>
+
+                <input type="number"
+                       name="price"
+                       value="<%= product.price %>"
+                       class="form-control"
+                       required>
+              </div>
+              <div class="form-group">
+                <label>Quantity</label>
+
+                <input type="number"
+                       name="quantity"
+                       value="<%= product.quantity %>"
+                       class="form-control"
+                       required>
+              </div>
+
+              <div class="form-group">
+                <label>Description</label>
+
+                <textarea name="description"
+                          class="form-control"><%= product.description %></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Select Category</label>
+
+                <select name="categoryId" id="category" class="form-control" required>
+                  <option value="">---Select Category---</option>
+
+                  <% categories.forEach(cat => { %>
+
+                    <option value="<%= cat._id %>"
+  <%= product.categoryId.toString() === cat._id.toString() ? "selected" : "" %>>
+  <%= cat.category %>
+</option>
+                  <% }) %>
+
+                </select>
+
+              </div>
+              <div class="form-group">
+                <label>Select Subcategory</label>
+
+                <select name="subcategoryId" id="subcategory" class="form-control" required>
+
+                  <% subcategories.forEach(sub => { %>
+
+                    <option value="<%= sub._id %>"
+                      <%= product.subcategoryId == sub._id ? "selected" : "" %> >
+
+                      <%= sub.subcategory %>
+
+                    </option>
+
+                  <% }) %>
+
+                </select>
+
+              </div>
+              <div class="form-group">
+                <label>Select Extra Category</label>
+
+                <select name="extraCategoryId" id="extracategory" class="form-control" required>
+
+                  <% extracategories.forEach(extra => { %>
+
+                    <option value="<%= extra._id %>"
+                      <%= product.extraCategoryId == extra._id ? "selected" : "" %> >
+
+                      <%= extra.extraCategory %>
+
+                    </option>
+
+                  <% }) %>
+
+                </select>
+
+              </div>
+
+            </div>
+
+            <div class="card-footer">
+
+              <button type="submit" class="btn btn-primary">
+                Update Product
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../footer') %>
+
+<script>
+document.getElementById("category").addEventListener("change", async function () {
+
+    let categoryId = this.value;
+
+    let res = await fetch(`/product/subcategory?categoryId=${categoryId}`);
+    let data = await res.json();
+
+    let subDropdown = document.getElementById("subcategory");
+    subDropdown.innerHTML = "";
+
+    data.forEach(sub => {
+        subDropdown.innerHTML += `<option value="${sub._id}">${sub.subcategory}</option>`;
+    });
+    document.getElementById("extracategory").innerHTML = "";
+});
+
+
+document.getElementById("subcategory").addEventListener("change", async function () {
+
+    let subcategoryId = this.value;
+
+    let res = await fetch(`/product/extracategory?subcategoryId=${subcategoryId}`);
+    let data = await res.json();
+
+    let extraDropdown = document.getElementById("extracategory");
+    extraDropdown.innerHTML = "";
+
+    data.forEach(extra => {
+        extraDropdown.innerHTML += `<option value="${extra._id}">${extra.extraCategory}</option>`;
+    });
+});
+
+document.querySelector("form").addEventListener("submit", () => {
+    console.log(document.getElementById("extracategory").value);
+});
+</script>
