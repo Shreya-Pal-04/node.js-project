@@ -1,4 +1,6 @@
 const Subcategory = require('../model/subcategory.model');
+const Product = require('../model/product.model');
+const ExtraCategory = require('../model/extracategory.model');
 const Category = require('../model/category.model');
 const fs = require("fs");
 
@@ -56,9 +58,16 @@ exports.updateSubCategory = async (req, res) => {
 }
 exports.deleteSubCategory = async (req, res) => {
     try {
-        await Subcategory.findByIdAndDelete(req.params.id);
+        let id = req.params.id;
+
+        let extracats = await ExtraCategory.find({ subcategoryId: id });
+        let extraIds = extracats.map(ec => ec._id);
+        await Product.deleteMany({ extraCategoryId: { $in: extraIds } });
+        await ExtraCategory.deleteMany({ subcategoryId: id });
+        await Subcategory.findByIdAndDelete(id);
+
         return res.redirect("/subcategory/view_subcategory");
     } catch (error) {
         console.log(error);
     }
-}
+};

@@ -150,7 +150,7 @@ subCategoryId.append(option);
 subCategoryId.addEventListener('change', () => {
 
 let subcategory = subCategoryId.value;
-tch(`/product/extracategory?subcategoryId=${subcategory}`)
+fetch(`/product/extracategory?subcategoryId=${subcategory}`)
 .then(res => res.json())
 .then(data => {
 

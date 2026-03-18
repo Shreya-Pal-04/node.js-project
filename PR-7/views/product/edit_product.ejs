@@ -71,11 +71,9 @@
                   <% subcategories.forEach(sub => { %>
 
                     <option value="<%= sub._id %>"
-                      <%= product.subcategoryId == sub._id ? "selected" : "" %> >
-
-                      <%= sub.subcategory %>
-
-                    </option>
+  <%= product.subcategoryId.toString() === sub._id.toString() ? "selected" : "" %>>
+  <%= sub.subcategory %>
+</option>
 
                   <% }) %>
 
@@ -90,7 +88,7 @@
                   <% extracategories.forEach(extra => { %>
 
                     <option value="<%= extra._id %>"
-                      <%= product.extraCategoryId == extra._id ? "selected" : "" %> >
+                      <%= product.extraCategoryId.toString() === extra._id.toString() ? "selected" : "" %>
 
                       <%= extra.extraCategory %>
 
@@ -136,7 +134,8 @@ document.getElementById("category").addEventListener("change", async function ()
     data.forEach(sub => {
         subDropdown.innerHTML += `<option value="${sub._id}">${sub.subcategory}</option>`;
     });
-    document.getElementById("extracategory").innerHTML = "";
+    document.getElementById("extracategory").innerHTML = 
+`<option value="">Select Extra Category</option>`;
 });
 
 
@@ -155,7 +154,23 @@ document.getElementById("subcategory").addEventListener("change", async function
     });
 });
 
-document.querySelector("form").addEventListener("submit", () => {
-    console.log(document.getElementById("extracategory").value);
+window.addEventListener("load", async () => {
+
+    let subcategoryId = document.getElementById("subcategory").value;
+
+    if(subcategoryId){
+
+        let res = await fetch(`/product/extracategory?subcategoryId=${subcategoryId}`);
+        let data = await res.json();
+
+        let extraDropdown = document.getElementById("extracategory");
+        extraDropdown.innerHTML = "";
+
+        data.forEach(extra => {
+            extraDropdown.innerHTML += `<option value="${extra._id}">${extra.extraCategory}</option>`;
+        });
+
+    }
+
 });
 </script>
